@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    interscript (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  interscript (~> 0.1)
+
+BUNDLED WITH
+   2.1.4
