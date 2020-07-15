@@ -1,19 +1,28 @@
-require 'interscript-api/lambda_function'
-
+require "interscript-api/lambda_function"
+require "json"
 
 describe InterscriptApi do
 
-  context 'With valid input' do
+  context "With valid input" do
 
-    it 'should return list of system_codes' do
-      # test_string = 'uuu'
-      # expect(test_string).to_not be_empty
-      lambda = InterscriptApi::LambdaFunction.new
+    # system_code = "un-ben-Beng-Latn-2016"
+    # mapping = Interscript::Mapping.for(system_code)
+    #
+    # expect(mapping.rules).to be_empty
+    # expect(mapping.characters["অ"]).to eq("a")
+    # expect(mapping.name).to eq("Bengali Romanization, Version 4.0")
 
+    it "should return valid data" do
       event = {}
+      event["body"] = JSON.generate(
+        {
+          system_code: "un-ben-Beng-Latn-2016",
+          input: "অ",
+        },
+      )
       context = {}
-      rs = InterscriptApi::LambdaFunction.process(event: event, context: context)
-      expect(rs).to eql('hello')
+      rs = InterscriptApi::LambdaFunction.process_system_code(event: event, context: context)
+      expect(rs).to eql("a")
     end
 
   end

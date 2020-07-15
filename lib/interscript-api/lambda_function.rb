@@ -5,22 +5,17 @@ module InterscriptApi
 
   class LambdaFunction
 
-    # @param [Object] event
-    # @param [Object] context
-    # @return [Hash{Symbol->Integer}]
-    def self.process(event:, context:)
+    def self.process_system_code(event:, context:)
       body = JSON.parse event["body"]
 
-      system = body["system"]
+      system_code = body["system_code"]
       input = body["input"]
 
-      puts "system: #{system}"
+      puts "system: #{system_code}"
       puts "input: #{input}"
 
-      # rs = { statusCode: 204 }
-
       begin
-        result = Interscript.transliterate(system, input)
+        result = Interscript.transliterate(system_code, input)
 
         rs = {
           statusCode: 200,
@@ -30,12 +25,12 @@ module InterscriptApi
             },
           ),
         }
-      rescue => error
+      rescue StandardError => e
         rs = {
           statusCode: 500,
           body: JSON.generate(
             {
-              errorMessage: "InvalidSystemError: #{error.inspect}",
+              errorMessage: "InvalidSystemError: #{e.inspect}",
             },
           ),
         }
