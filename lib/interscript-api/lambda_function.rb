@@ -1,6 +1,6 @@
 module InterscriptApi
 
-  class Handler
+  class LambdaFunction
     def self.process(event:, context:)
       "Hello!"
     end
