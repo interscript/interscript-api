@@ -19,24 +19,32 @@ module InterscriptApi
 
         rs = {
           statusCode: 200,
-          body: JSON.generate(
-            {
-              result: result,
-            },
-          ),
+          body: JSON.generate({ result: result }),
         }
       rescue StandardError => e
         rs = {
           statusCode: 500,
-          body: JSON.generate(
-            {
-              errorMessage: "InvalidSystemError: #{e.inspect}",
-            },
-          ),
+          body: JSON.generate({ errorMessage: "InvalidSystemError: #{e.inspect}" }),
         }
       end
 
       rs
+    end
+
+    def self.get_system_codes(event:, context:)
+      spec = Gem::Specification.find_by_name("interscript")
+      gem_root = spec.gem_dir
+      puts gem_root
+
+      maps_root = "#{gem_root}/maps"
+      maps = Dir.entries(maps_root).
+        select { |file| file.end_with?(".yaml") }.
+        map { |file| File.basename(file, ".yaml") }
+
+      {
+        statusCode: 200,
+        body: JSON.generate({ result: maps }),
+      }
     end
   end
 end

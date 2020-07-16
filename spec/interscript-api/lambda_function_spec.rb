@@ -5,13 +5,6 @@ describe InterscriptApi do
 
   context "With valid input" do
 
-    # system_code = "un-ben-Beng-Latn-2016"
-    # mapping = Interscript::Mapping.for(system_code)
-    #
-    # expect(mapping.rules).to be_empty
-    # expect(mapping.characters["অ"]).to eq("a")
-    # expect(mapping.name).to eq("Bengali Romanization, Version 4.0")
-
     it "should return valid data" do
       event = {}
       event["body"] = JSON.generate(
@@ -26,5 +19,10 @@ describe InterscriptApi do
       expect(rs["result"]).to eql("a")
     end
 
+    it "should return list of system_codes" do
+      rs = InterscriptApi::LambdaFunction.get_system_codes(event: nil , context: nil)
+      rs = JSON.parse(rs["body".to_sym])["result"]
+      puts rs
+    end
   end
 end
