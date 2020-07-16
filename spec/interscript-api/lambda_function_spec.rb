@@ -16,13 +16,14 @@ describe InterscriptApi do
       event = {}
       event["body"] = JSON.generate(
         {
-          system_code: "un-ben-Beng-Latn-2016",
-          input: "অ",
+          system_code: "un-mon-Mong-Latn-2013",
+          input: "a",
         },
       )
       context = {}
       rs = InterscriptApi::LambdaFunction.process_system_code(event: event, context: context)
-      expect(rs).to eql("a")
+      rs = JSON.parse(rs["body".to_sym])
+      expect(rs["result"]).to eql("a")
     end
 
   end
