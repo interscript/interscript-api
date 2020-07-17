@@ -176,11 +176,11 @@ Metrics/LineLength:
   - http
   - https
 Metrics/MethodLength:
-  Description: Avoid methods longer than 10 lines of code.
+  Description: Avoid methods longer than 20 lines of code.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
   Enabled: true
   CountComments: true
-  Max: 10
+  Max: 20
   Exclude:
   - spec/**/*
 Style/ModuleFunction:
