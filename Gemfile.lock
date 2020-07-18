@@ -2,7 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.4.4)
+    graphql (1.11.1)
     interscript (0.1.2)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -16,13 +18,21 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.3)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  graphql (~> 1.9)
   interscript (~> 0.1.2)
-  rspec (~> 3.9)
+  rake
+  rspec
+  rspec_junit_formatter
+
+RUBY VERSION
+   ruby 2.7.0p0
 
 BUNDLED WITH
    2.1.4
