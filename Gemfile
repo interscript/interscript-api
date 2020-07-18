@@ -8,5 +8,4 @@ gem "interscript", "~>0.1.2"
 group :development do
   gem "rake"
   gem "rspec"
-  gem "rspec_junit_formatter"
 end
