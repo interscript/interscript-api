@@ -34,16 +34,27 @@ module InterscriptApi
     def self.get_system_codes(event:, context:)
       spec = Gem::Specification.find_by_name("interscript")
       gem_root = spec.gem_dir
-      puts gem_root
 
       maps_root = "#{gem_root}/maps"
-      maps = Dir.entries(maps_root).
+      system_codes = Dir.entries(maps_root).
         select { |file| file.end_with?(".yaml") }.
         map { |file| File.basename(file, ".yaml") }
 
       {
         statusCode: 200,
-        body: JSON.generate({ result: maps }),
+        body: JSON.generate({ result: system_codes }),
+      }
+    end
+
+    def self.get_system_limits(event:, context:)
+      limits = {
+        message_size_max: 100000,
+        processing_time_max: 15000,
+      }
+
+      {
+        statusCode: 200,
+        body: JSON.generate({ result: limits }),
       }
     end
   end
