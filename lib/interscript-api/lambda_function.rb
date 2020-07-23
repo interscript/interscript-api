@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "json"
-# require_relative 'app/graphql/schema'
+require_relative 'graphql/schema'
 
 def handler(event:, context:)
   puts "Received Request: #{event}"
 
-  # body = Schema.execute(event['body']).to_json
+  body = Schema.execute(event['body']).to_json
 
   {
     statusCode: 200,
-    body: JSON.generate("WORKING"),
+    body: body,
   }
 rescue StandardError => e
   puts e.message
