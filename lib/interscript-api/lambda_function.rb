@@ -14,10 +14,9 @@ def handler(event:, context:)
     body: body,
   }
 rescue StandardError => e
-  puts e.message
   puts e.backtrace.inspect
   {
     statusCode: 400,
-    body: JSON.generate("Bad request, please POST a request body!"),
+    body: e.message
   }
 end

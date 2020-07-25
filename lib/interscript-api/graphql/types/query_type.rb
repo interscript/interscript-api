@@ -1,15 +1,27 @@
 require "graphql"
 require_relative "../../../limits"
+require 'interscript'
+
 
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
 
   field :limits, String, null: true do
-    description "Get all current supported system_codes"
+    description "Get limits API information"
   end
 
   field :system_codes, [String], null: true do
     description "Get all current supported system_codes"
+  end
+
+  field :transliterate, String, null: true do
+    description "Transliterate #input using #system_code"
+    argument :system_code, String, required: true
+    argument :input, String, required: true
+  end
+
+  def transliterate(system_code:, input:)
+    Interscript::transliterate(system_code, input)
   end
 
   def limits
