@@ -1,39 +1,31 @@
 require "graphql"
-require_relative "../models/post"
-require_relative "post_type"
+require_relative "../../../limits"
 
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
 
-  # field :systemCodes, String, null: true do
-  #   description "Get all current supported system_codes"
-  # end
-  #
-  # def systemCodes
-  #   "system_code 1"
-  # end
-
-  # fields should be queried in camel-case (this will be `truncatedPreview`)
-  # field :truncated_preview, String, null: false
-
-  field :system_codes, String, null: true do
+  field :limits, String, null: true do
     description "Get all current supported system_codes"
   end
 
+  field :system_codes, [String], null: true do
+    description "Get all current supported system_codes"
+  end
+
+  def limits
+    JSON.generate InterscriptApi::LIMITS
+  end
+
   def system_codes
-    "system_code 2"
-  end
+    spec = Gem::Specification.find_by_name("interscript")
+    gem_root = spec.gem_dir
+    puts gem_root
 
-  # First describe the field signature:
-  field :post, Types::PostType, null: true do
-    description "Find a post by ID"
-    argument :id, ID, required: true
-  end
-
-  # Then provide an implementation:
-  def post(id:)
-    #Post.find(id)
-    Post.find(id)
+    maps_root = "#{gem_root}/maps"
+    Dir.entries(maps_root).
+      select { |file| file.end_with?(".yaml") }.
+      map { |file| File.basename(file, ".yaml") }
   end
 end
+
 

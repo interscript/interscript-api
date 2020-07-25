@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative 'graphql/schema'
+require_relative "graphql/schema"
 
 def handler(event:, context:)
   puts "Received Request: #{event}"
 
-  body = Schema.execute(event['body']).to_json
+  query = event["body"]
+  body = InterscriptApi::Schema.execute(query).to_json
 
   {
     statusCode: 200,
@@ -15,7 +16,6 @@ def handler(event:, context:)
 rescue StandardError => e
   puts e.message
   puts e.backtrace.inspect
-
   {
     statusCode: 400,
     body: JSON.generate("Bad request, please POST a request body!"),
