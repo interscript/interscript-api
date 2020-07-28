@@ -7,22 +7,17 @@ describe InterscriptApi do
 
     it "should return valid data" do
       event = {}
-      event["body"] = JSON.generate(
-        {
-          system_code: "un-mon-Mong-Latn-2013",
-          input: "a",
-        },
-      )
+      event["body"] = '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
       context = {}
-      rs = InterscriptApi::LambdaFunction.process_system_code(event: event, context: context)
-      rs = JSON.parse(rs["body".to_sym])
-      expect(rs["result"]).to eql("a")
+      rs = handler(event: event, context: context)
+      rs = JSON.parse(rs[:body])["data"]["transliterate"]
+      expect(rs).to eql("testing")
     end
 
-    it "should return list of system_codes" do
-      rs = InterscriptApi::LambdaFunction.get_system_codes(event: nil , context: nil)
-      rs = JSON.parse(rs["body".to_sym])["result"]
-      puts rs
-    end
+    # it "should return list of system_codes" do
+    #   rs = handler(event: nil , context: nil)
+    #   rs = JSON.parse(rs["body".to_sym])["result"]
+    #   puts rs
+    # end
   end
 end
