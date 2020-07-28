@@ -1,0 +1,19 @@
+= Interscript API package
+
+This is the API for Interscript.
+
+== Demo
+
+Try the API out here.
+
+[source,sh]
+----
+API_URL="https://zkjrxjsleh.execute-api.us-east-1.amazonaws.com/prod/interscript"
+curl -XPOST ${API_URL} \
+  --header 'Content-Type: application/json' \
+  --data-raw '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
+
+curl -XPOST ${API_URL} \
+  --header 'Content-Type: application/json' \
+  --data-raw '{systemCodes}'
+----
