@@ -23,8 +23,7 @@ class QueryType < GraphQL::Schema::Object
   def transliterate(system_code:, input:)
     raise StandardError.new("{input} string too long") if input.length > InterscriptApi::LIMITS[:input_max_size]
 
-    Interscript
-      .transliterate(system_code, input)
+    Interscript.transliterate(system_code, input)
   end
 
   def limits
@@ -34,7 +33,6 @@ class QueryType < GraphQL::Schema::Object
   def system_codes
     spec = Gem::Specification.find_by_name("interscript")
     gem_root = spec.gem_dir
-    puts gem_root
 
     maps_root = "#{gem_root}/maps"
     Dir.entries(maps_root).
