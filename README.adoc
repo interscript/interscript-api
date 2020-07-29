@@ -2,18 +2,87 @@
 
 This is the API for Interscript.
 
-== Demo
+== Transliterating text
 
-Try the API out here.
+[source,sh]
+----
+cat <<EOT > rus-Cyrl.txt
+Эх, тройка! птица тройка, кто тебя выдумал? знать, у бойкого народа ты
+могла только родиться, в той земле, что не любит шутить, а
+ровнем-гладнем разметнулась на полсвета, да и ступай считать версты,
+пока не зарябит тебе в очи. И не хитрый, кажись, дорожный снаряд, не
+железным схвачен винтом, а наскоро живьём с одним топором да долотом
+снарядил и собрал тебя ярославский расторопный мужик. Не в немецких
+ботфортах ямщик: борода да рукавицы, и сидит чёрт знает на чём; а
+привстал, да замахнулся, да затянул песню — кони вихрем, спицы в
+колесах смешались в один гладкий круг, только дрогнула дорога, да
+вскрикнул в испуге остановившийся пешеход — и вон она понеслась,
+понеслась, понеслась!
+
+Н.В. Гоголь
+EOT
+
+API_URL="https://zkjrxjsleh.execute-api.us-east-1.amazonaws.com/prod/interscript"
+cat rus-Cyrl.txt | curl -XPOST ${API_URL} \
+  --header 'Content-Type: application/json' \
+  --data-raw "{transliterate(systemCode: \"bas-rus-Cyrl-Latn-oss\", input: \"$(</dev/stdin)\")}"
+----
+
+=> 
+
+[source,json]
+----
+{
+  "data": {
+    "transliterate": "`Eh, troyka! ptitsa troyka, kto tebya v`idumal? znat', u boykogo naroda t`i\nmogla tol'ko rodit'sya, v toy zemle, chto ne lyubit shutit', a\nrovnem-gladnem razmetnulas' na polsveta, da i stupay schitat' verst`i,\npoka ne zaryabit tebe v ochi. I ne hitr`iy, kazhis', dorozhn`iy snaryad, ne\nzhelezn`im shvachen vintom, a naskoro zhiv'``em s odnim toporom da dolotom\nsnaryadil i sobral tebya yaroslavskiy rastoropn`iy muzhik. Ne v nemetskih\nbotfortah yamshchik: boroda da rukavits`i, i sidit ch``ert znaet na ch``em; a\nprivstal, da zamahnulsya, da zatyanul pesnyu — koni vihrem, spits`i v\nkolesah smeshalis' v odin gladkiy krug, tol'ko drognula doroga, da\nvskriknul v ispuge ostanovivshiysya peshehod — i von ona poneslas',\nponeslas', poneslas'!\n\nN.V. Gogol'"
+  }
+}
+----
+
+== Listing supported systems
 
 [source,sh]
 ----
 API_URL="https://zkjrxjsleh.execute-api.us-east-1.amazonaws.com/prod/interscript"
 curl -XPOST ${API_URL} \
   --header 'Content-Type: application/json' \
-  --data-raw '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
-
-curl -XPOST ${API_URL} \
-  --header 'Content-Type: application/json' \
   --data-raw '{systemCodes}'
 ----
+
+=>
+
+[source,json]
+----
+{
+  "data": {
+    "systemCodes": [
+      "bas-rus-Cyrl-Latn-bss",
+      "bas-rus-Cyrl-Latn-oss",
+      "bgnpcgn-arm-Armn-Latn-1981",
+      "bgnpcgn-bul-Cyrl-Latn-2013",
+      "bgnpcgn-chn-Hans-Latn-pinyin",
+      "bgnpcgn-per-Arab-Latn-1956",
+      "bgnpcgn-rus-Cyrl-Latn-1947",
+      "bgnpcgn-ukr-Cyrl-Latn-1965",
+      "cn-chn-Hans-Latn-pinyin",
+      "historic-jpn-Hrkt-Latn-hepburn",
+      "icao-bel-Cyrl-Latn-9303",
+      "icao-bul-Cyrl-Latn-9303",
+      "icao-gre-Grek-Latn-9303",
+      "icao-heb-Hebr-Latn-9303",
+      "icao-mkd-Cyrl-Latn-9303",
+      "icao-per-Arab-Latn-9303",
+      "icao-rus-Cyrl-Latn-9303",
+      "icao-srp-Cyrl-Latn-9303",
+      "icao-ukr-Cyrl-Latn-9303",
+      "iso-rus-Cyrl-Latn-iso9",
+      "mext-jpn-Hrkt-Latn-hepburn",
+      "mext-jpn-Hrkt-Latn-kunrei",
+      "un-jpn-Hrkt-Latn-hepburn",
+      "un-jpn-Hrkt-Latn-kunrei",
+      "un-mon-Mong-Latn-2013"
+    ]
+  }
+}
+----
+
