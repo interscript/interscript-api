@@ -1,6 +1,6 @@
 require "graphql"
 require_relative "../../../limits"
-require 'interscript'
+require "interscript"
 
 
 class QueryType < GraphQL::Schema::Object
