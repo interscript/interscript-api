@@ -2,9 +2,14 @@ require "json"
 require_relative "graphql/schema"
 
 def handler(event:, context:)
-  # puts "Received Request: #{event}"
-
   query = event["body"]
+  begin
+    query = JSON.parse query
+    query = query["query"]
+  rescue JSON::ParserError
+    # ignore
+  end
+
   body = InterscriptApi::Schema.execute(query).to_json
 
   {

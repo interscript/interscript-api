@@ -13,11 +13,5 @@ describe InterscriptApi do
       rs = JSON.parse(rs[:body])["data"]["transliterate"]
       expect(rs).to eql("testing")
     end
-
-    # it "should return list of system_codes" do
-    #   rs = handler(event: nil , context: nil)
-    #   rs = JSON.parse(rs["body".to_sym])["result"]
-    #   puts rs
-    # end
   end
 end
