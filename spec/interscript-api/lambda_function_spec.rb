@@ -7,7 +7,8 @@ describe InterscriptApi do
 
     it "should return valid data" do
       event = {}
-      event["body"] = '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
+      event["body"] = '{transliterate(systemCode: "bas-rus-Cyrl-Latn-2017-oss", input: "testing")}'
+      # event["body"] = '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
       context = {}
       rs = handler(event: event, context: context)
       rs = JSON.parse(rs[:body])["data"]["transliterate"]
@@ -15,3 +16,7 @@ describe InterscriptApi do
     end
   end
 end
+
+# {
+#   transliterate(systemCode: "bas-rus-Cyrl-Latn-2017-oss", input: "testing")
+# }
