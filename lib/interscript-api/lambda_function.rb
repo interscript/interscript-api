@@ -9,6 +9,7 @@ def handler(event:, context:)
   }
 
   query = event["body"]
+
   begin
     query = JSON.parse query
     query = query["query"]
@@ -30,6 +31,11 @@ def handler(event:, context:)
     body: body,
   }
 rescue StandardError => e
+  return {
+    statusCode: 204,
+    headers: headers,
+  } if event["body"].nil? || event["body"].empty?
+
   puts e.backtrace.inspect
   {
     statusCode: 400,
