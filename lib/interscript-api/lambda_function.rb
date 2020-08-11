@@ -10,6 +10,12 @@ def handler(event:, context:)
     # ignore
   end
 
+  # headers = {
+  #   "Access-Control-Allow-Headers" : "Content-Type",
+  #   "Access-Control-Allow-Origin": "https://www.example.com",
+  #   "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+  # }
+
   body = InterscriptApi::Schema.execute(query).to_json
 
   {
