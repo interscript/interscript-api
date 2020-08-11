@@ -2,6 +2,12 @@ require "json"
 require_relative "graphql/schema"
 
 def handler(event:, context:)
+  headers = {
+    "Access-Control-Allow-Headers" : "Content-Type",
+    "Access-Control-Allow-Origin": "https://api.boppi.website",
+    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+  }
+
   query = event["body"]
   begin
     query = JSON.parse query
@@ -20,12 +26,14 @@ def handler(event:, context:)
 
   {
     statusCode: 200,
+    headers: headers,
     body: body,
   }
 rescue StandardError => e
   puts e.backtrace.inspect
   {
     statusCode: 400,
+    headers: headers,
     body: e.message
   }
 end
