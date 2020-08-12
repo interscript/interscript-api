@@ -4,8 +4,8 @@ require_relative "graphql/schema"
 def handler(event:, context:)
   headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
+    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods": "OPTIONS,POST"
   }
 
   query = event["body"]
@@ -17,12 +17,6 @@ def handler(event:, context:)
     # ignore
   end
 
-  # headers = {
-  #   "Access-Control-Allow-Headers" : "Content-Type",
-  #   "Access-Control-Allow-Origin": "https://www.example.com",
-  #   "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-  # }
-
   body = InterscriptApi::Schema.execute(query).to_json
 
   {
@@ -32,7 +26,7 @@ def handler(event:, context:)
   }
 rescue StandardError => e
   return {
-    statusCode: 204,
+    statusCode: 200,
     headers: headers,
   } if event["body"].nil? || event["body"].empty?
 
