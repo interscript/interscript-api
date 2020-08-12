@@ -3,8 +3,8 @@ require_relative "graphql/schema"
 
 def handler(event:, context:)
   headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Origin": "https://www.interscript.com",
+    "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Allow-Methods": "OPTIONS,POST"
   }
 
