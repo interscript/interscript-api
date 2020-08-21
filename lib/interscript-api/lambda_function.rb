@@ -3,9 +3,9 @@ require_relative "graphql/schema"
 
 def handler(event:, context: {})
 
-  cors_origin = "https://www.interscript.com"
+  cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
-  if ENV["CORS_ORIGIN"] =~ input_origin
+  if ENV["CORS_ORIGIN_REGEX"] =~ input_origin
     cors_origin = input_origin
   end
 
