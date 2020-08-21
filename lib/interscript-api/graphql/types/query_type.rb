@@ -2,6 +2,8 @@ require "graphql"
 require_relative "../../../limits"
 require "interscript"
 
+require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
+
 
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
