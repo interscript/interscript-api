@@ -2,39 +2,44 @@ require "json"
 require_relative "graphql/schema"
 
 def handler(event:, context: {})
+
+  cors_origin = "https://www.interscript.com"
+  input_origin = event.fetch('headers', {}).fetch('origin', "")
+  if ENV["CORS_ORIGIN"] =~ input_origin
+    cors_origin = input_origin
+  end
+
   headers = {
-    "Access-Control-Allow-Origin" => "https://www.interscript.com",
-    "Access-Control-Allow-Headers" => "Content-Type",
-    "Access-Control-Allow-Methods" => "OPTIONS,POST"
+    "Access-Control-Allow-Origin" => cors_origin,
+    "Access-Control-Allow-Headers"=> 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+    "Access-Control-Allow-Methods"=> "POST, OPTIONS"
   }
 
-  if event["body"].nil? || event["body"].empty?
+  body = event['body']
+  if body.nil? || body.empty?
     return {
       statusCode: 200,
       headers: headers,
     }
   end
 
-  query = event["body"]
+  query = begin
+            JSON.parse(body)["query"]
+          rescue JSON::ParserError
+            body
+          end
 
-  begin
-    query = JSON.parse query
-    query = query["query"]
-  rescue JSON::ParserError
-    # ignore
-  end
-
-  body = InterscriptApi::Schema.execute(query).to_json
+  status_code = begin
+                  result = InterscriptApi::Schema.execute(query).to_json
+                  200
+                rescue StandardError => e
+                  result = e.message
+                  400
+                end
 
   {
-    statusCode: 200,
+    statusCode: status_code,
     headers: headers,
-    body: body,
-  }
-rescue StandardError => e
-  {
-    statusCode: 400,
-    headers: headers,
-    body: e.message
+    body: result
   }
 end
