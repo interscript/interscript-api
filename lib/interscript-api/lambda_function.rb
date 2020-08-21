@@ -6,18 +6,6 @@ def handler(event:, context: {})
   cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
 
-  # puts 123
-  # puts cors_origin
-  # puts ENV["CORS_ORIGIN_REGEX"]
-  # puts input_origin
-  #
-  # {
-  #   statusCode: 200,
-  #   body: "working"
-  # }
-  # matched = (ENV["CORS_ORIGIN_REGEX"] =~ input_origin).nil?
-  # puts 123
-  # puts matched
   if /#{ENV["CORS_ORIGIN_REGEX"]}/ =~ input_origin
     cors_origin = input_origin
   end
@@ -29,7 +17,7 @@ def handler(event:, context: {})
   }
 
   body = event['body']
-  if body.nil? || body.empty?
+  if "OPTIONS".casecmp?(event['httpMethod']) || body.nil? || body.empty?
     return {
       statusCode: 200,
       headers: headers,
