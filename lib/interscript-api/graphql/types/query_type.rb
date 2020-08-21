@@ -25,7 +25,7 @@ class QueryType < GraphQL::Schema::Object
       raise StandardError.new("{input} string too long")
     end
 
-    Interscript.transliterate(system_code, input)
+    Interscript.transliterate(system_code, input.dup)
   end
 
   def limits

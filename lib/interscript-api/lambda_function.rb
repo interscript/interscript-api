@@ -1,12 +1,19 @@
 require "json"
 require_relative "graphql/schema"
 
-def handler(event:, context:)
+def handler(event:, context: {})
   headers = {
-    "Access-Control-Allow-Origin": "https://www.interscript.com",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "OPTIONS,POST"
+    "Access-Control-Allow-Origin" => "https://www.interscript.com",
+    "Access-Control-Allow-Headers" => "Content-Type",
+    "Access-Control-Allow-Methods" => "OPTIONS,POST"
   }
+
+  if event["body"].nil? || event["body"].empty?
+    return {
+      statusCode: 200,
+      headers: headers,
+    }
+  end
 
   query = event["body"]
 
@@ -25,12 +32,6 @@ def handler(event:, context:)
     body: body,
   }
 rescue StandardError => e
-  return {
-    statusCode: 200,
-    headers: headers,
-  } if event["body"].nil? || event["body"].empty?
-
-  puts e.backtrace.inspect
   {
     statusCode: 400,
     headers: headers,

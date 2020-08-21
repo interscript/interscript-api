@@ -6,17 +6,12 @@ describe InterscriptApi do
   context "With valid input" do
 
     it "should return valid data" do
-      event = {}
-      event["body"] = '{transliterate(systemCode: "bas-rus-Cyrl-Latn-2017-oss", input: "testing")}'
-      # event["body"] = '{transliterate(systemCode: "bgnpcgn-arm-Armn-Latn-1981", input: "testing")}'
-      context = {}
-      rs = handler(event: event, context: context)
+      event = {
+        "body" => '{transliterate(systemCode: "odni-rus-Cyrl-Latn-2015", input: "Михаил Тимофеевич Калашников")}'
+      }
+      rs = handler(event: event)
       rs = JSON.parse(rs[:body])["data"]["transliterate"]
-      expect(rs).to eql("testing")
+      expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
     end
   end
 end
-
-# {
-#   transliterate(systemCode: "bas-rus-Cyrl-Latn-2017-oss", input: "testing")
-# }

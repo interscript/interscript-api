@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.4.4)
-    graphql (1.11.1)
+    graphql (1.11.3)
     interscript (0.1.4)
       thor
     rake (13.0.1)
