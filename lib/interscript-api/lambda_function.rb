@@ -38,8 +38,12 @@ def handler(event:, context: {})
                   400
                 end
 
-  result_json = JSON.parse result
-  status_code = 400 if result_json.key?("errors")
+  begin
+    result_json = JSON.parse result
+    status_code = 400 if result_json.key?("errors")
+  rescue JSON::ParserError
+    #ignore
+  end
 
   {
     statusCode: status_code,
