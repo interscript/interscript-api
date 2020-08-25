@@ -38,6 +38,9 @@ def handler(event:, context: {})
                   400
                 end
 
+  result_json = JSON.parse result
+  status_code = 400 if result_json.key?("errors")
+
   {
     statusCode: status_code,
     headers: headers,
