@@ -8,9 +8,13 @@ require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
 
-  field :limits, String, null: true do
-    description "Get limits API information"
+  field :info, String, null: true do
+    description "Get API information"
   end
+
+  # field :limits, String, null: true do
+  #   description "Get limits API information"
+  # end
 
   field :system_codes, [String], null: true do
     description "Get all current supported system_codes"
@@ -30,9 +34,16 @@ class QueryType < GraphQL::Schema::Object
     Interscript.transliterate(system_code, input.dup)
   end
 
-  def limits
-    JSON.generate InterscriptApi::LIMITS
+  def info
+    JSON.generate({
+                    limit: InterscriptApi::LIMITS[:input_max_size],
+                    interscript_version: InterscriptApi::INTERSCRIPT_VERSION
+                  })
   end
+
+  # def limits
+  #   JSON.generate InterscriptApi::LIMITS
+  # end
 
   def system_codes
     spec = Gem::Specification.find_by_name("interscript")
