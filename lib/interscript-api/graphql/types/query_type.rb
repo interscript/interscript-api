@@ -1,5 +1,6 @@
 require "graphql"
 require_relative "../../../limits"
+require_relative "../../../version"
 require "interscript"
 
 require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
