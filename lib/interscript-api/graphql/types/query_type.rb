@@ -35,6 +35,10 @@ class QueryType < GraphQL::Schema::Object
   end
 
   def info
+    # JSON.generate({
+    #                 limit: InterscriptApi::LIMITS[:input_max_size],
+    #                 interscript_version: InterscriptApi::INTERSCRIPT_VERSION
+    #               })
     JSON.generate({
                     limit: InterscriptApi::LIMITS[:input_max_size],
                     interscript_version: InterscriptApi::INTERSCRIPT_VERSION
