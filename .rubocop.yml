@@ -1,9 +1,9 @@
 ---
 AllCops:
   Exclude:
-  - vendor/**/*
-  - db/**/*
-  - tmp/**/*
+    - vendor/**/*
+    - db/**/*
+    - tmp/**/*
   DisplayCopNames: false
   StyleGuideCopsOnly: false
   TargetRubyVersion: 2.4
@@ -85,7 +85,7 @@ Metrics/BlockLength:
   Max: 25
   ExcludedMethods: []
   Exclude:
-  - spec/**/*
+    - spec/**/*
 Metrics/CyclomaticComplexity:
   Description: A complexity metric that is strongly correlated to the number of test
     cases needed to validate a method.
@@ -169,20 +169,20 @@ Style/LineEndConcatenation:
 Metrics/LineLength:
   Description: Limit lines to 80 characters.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#80-character-limits
-  Max: 180
+  Max: 80
   Enabled: true
   AllowURI: true
   URISchemes:
-  - http
-  - https
+    - http
+    - https
 Metrics/MethodLength:
-  Description: Avoid methods longer than 20 lines of code.
+  Description: Avoid methods longer than 10 lines of code.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
   Enabled: true
   CountComments: true
-  Max: 20
+  Max: 10
   Exclude:
-  - spec/**/*
+    - spec/**/*
 Style/ModuleFunction:
   Description: Checks for usage of `extend self` in modules.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#module-function
@@ -241,9 +241,9 @@ Naming/PredicateName:
   Description: Check the names of predicate methods.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#bool-methods-qmark
   ForbiddenPrefixes:
-  - is_
+    - is_
   Exclude:
-  - spec/**/*
+    - spec/**/*
 Style/Proc:
   Description: Use proc instead of Proc.new.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#proc
@@ -287,27 +287,27 @@ Style/TrailingCommaInArguments:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   EnforcedStyleForMultiline: comma
   SupportedStylesForMultiline:
-  - comma
-  - consistent_comma
-  - no_comma
+    - comma
+    - consistent_comma
+    - no_comma
   Enabled: true
 Style/TrailingCommaInArrayLiteral:
   Description: Checks for trailing comma in array literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   EnforcedStyleForMultiline: comma
   SupportedStylesForMultiline:
-  - comma
-  - consistent_comma
-  - no_comma
+    - comma
+    - consistent_comma
+    - no_comma
   Enabled: true
 Style/TrailingCommaInHashLiteral:
   Description: Checks for trailing comma in hash literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   EnforcedStyleForMultiline: comma
   SupportedStylesForMultiline:
-  - comma
-  - consistent_comma
-  - no_comma
+    - comma
+    - consistent_comma
+    - no_comma
   Enabled: true
 Style/TrivialAccessors:
   Description: Prefer attr_* methods to trivial readers/writers.

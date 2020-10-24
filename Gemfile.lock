@@ -2,8 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.4.4)
-    graphql (1.11.1)
-    interscript (0.1.2)
+    graphql (1.11.3)
+    interscript (0.1.7)
+      thor
     rake (13.0.1)
     rambling-trie (2.1.1)
     rspec (3.9.0)
@@ -19,13 +20,14 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.3)
+    thor (1.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   graphql (~> 1.9)
-  interscript (= 0.1.2)
+  interscript (= 0.1.7)
   rake
   rambling-trie (~> 2.1.1)
   rspec
