@@ -1,4 +1,4 @@
-require_relative 'types/query_type'
+require_relative "types/query_type"
 
 module InterscriptApi
   class Schema < GraphQL::Schema
