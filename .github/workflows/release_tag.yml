@@ -4,21 +4,21 @@ on:
   repository_dispatch:
     types: [ interscript/interscript ]
 
+env:
+  GITHUB_PUSH_TOKEN: ${{ secrets.INTERSCRIPT_CI_PAT }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   push-tag:
     runs-on: ubuntu-18.04
     if: startsWith(github.event.client_payload.ref, 'refs/tags/v')
     steps:
     - uses: actions/checkout@v1
-#      with:
-#        token: ${{ secrets.MY_TOKEN }}
 
     - name: Setup env-vars
       run: |
         REF="${{ github.event.client_payload.ref }}"
         echo "INTERSCRIPT_VERSION=${REF#refs/*/v}" >> $GITHUB_ENV
-        echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-        echo "GITHUB_PUSH_TOKEN=${{ secrets.GITHUB_PUSH_TOKEN }}" >> $GITHUB_ENV
 
     - name: Create API Release
       uses: actions/create-release@v1
