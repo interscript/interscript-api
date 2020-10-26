@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -19,7 +22,6 @@ jobs:
       - name: Prepare env-vars
         run: |
           echo "INTERSCRIPT_VERSION=${GITHUB_REF#refs/*/v}" >> ${GITHUB_ENV}
-          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> ${GITHUB_ENV}
           echo "AWS_LAMBDA=${GITHUB_WORKSPACE}/AWS_LAMBDA" >> ${GITHUB_ENV}
       - name: Prepare lambda upload
         run: |
