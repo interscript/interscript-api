@@ -6,6 +6,7 @@ on:
       - 'v*'
 
 env:
+  GITHUB_PUSH_TOKEN: ${{ secrets.INTERSCRIPT_CI_PAT }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
@@ -56,3 +57,12 @@ jobs:
 #          RUBYGEMS_API_KEY: ${{secrets.INTERSCRIPT_RUBYGEMS_API_KEY}}
         run: |
           echo "TODO"
+
+      - name: Dispatch interscript-infra publish to AWS Lambda
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ env.GITHUB_PUSH_TOKEN }}
+          repository: phuonghuynh/testci3
+          event-type: ${{ github.repository }}
+          client-payload: '{ "workflow": "terraform", "interscript_version": "${{env.INTERSCRIPT_VERSION}}" }'
+
