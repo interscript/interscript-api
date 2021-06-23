@@ -23,6 +23,8 @@ jobs:
         run: |
           RELEASE_NAME="${{github.event.release.name}}"
           echo "RELEASE_NAME=$RELEASE_NAME" >> ${GITHUB_ENV}
+          RELEASE_TAG_NAME="${{github.event.release.tag_name}}"
+          echo "RELEASE_TAG_NAME=$RELEASE_TAG_NAME" >> ${GITHUB_ENV}
           INTERSCRIPT_VERSION=$(echo "$RELEASE_NAME" | grep -Po '(?<=v)[^;]+')
           echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION" >> ${GITHUB_ENV}
 
@@ -65,4 +67,4 @@ jobs:
           token: ${{ env.GITHUB_PUSH_TOKEN }}
           repository: interscript/infrastructure-lambda-api
           event-type: ${{ github.repository }}
-          client-payload: '{ "workflow": "terraform", "interscript_version": "${{env.INTERSCRIPT_VERSION}}" }'
+          client-payload: '{ "workflow": "on-api-release.yml", "interscript_api_tag_name": "${{env.RELEASE_TAG_NAME}}", "interscript_version": "${{env.INTERSCRIPT_VERSION}}" }'
