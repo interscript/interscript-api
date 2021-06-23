@@ -28,7 +28,7 @@ cat rus-Cyrl.txt | curl -XPOST ${API_URL} \
   --data-raw "{transliterate(systemCode: \"bas-rus-Cyrl-Latn-oss\", input: \"$(</dev/stdin)\")}"
 ----
 
-=> 
+=>
 
 [source,json]
 ----
@@ -86,3 +86,7 @@ curl -XPOST ${API_URL} \
 }
 ----
 
+== Release new version
+
+- Use GHA "manual-release.yml" for this purpose, input should be both `api_version` and `gem_interscript_version`
+- The manual release workflow will trigger "api-infra" for deploying to aws production
