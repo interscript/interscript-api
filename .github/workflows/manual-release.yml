@@ -43,6 +43,6 @@ jobs:
         with:
           tag_name: v${{env.API_VERSION}}
           release_name: Release API for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
-          body: Auto release by @interscript-ci
+          body: for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
           draft: false
           prerelease: false
