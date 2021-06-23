@@ -1,4 +1,4 @@
-name: release-tag
+name: on-interscript-release
 
 on:
   repository_dispatch:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   create-release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     if: startsWith(github.event.client_payload.ref, 'refs/tags/v')
     steps:
     - uses: actions/checkout@v1

@@ -1,0 +1,33 @@
+name: manual-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      interscript_version:
+        required: true
+        description: Interscript version that published to "rubygems.org"
+
+env:
+  GITHUB_PUSH_TOKEN: ${{ secrets.INTERSCRIPT_CI_PAT }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  INTERSCRIPT_VERSION: ${{github.event.inputs.interscript_version}}
+
+jobs:
+  make-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone it
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: make new release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{env.GITHUB_PUSH_TOKEN}}
+        with:
+          tag_name: v${{env.INTERSCRIPT_VERSION}}
+          release_name: Release v${{env.INTERSCRIPT_VERSION}}
+          body: Auto release API v${{env.INTERSCRIPT_VERSION}} by @interscript-ci
+          draft: false
+          prerelease: false
