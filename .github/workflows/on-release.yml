@@ -59,11 +59,10 @@ jobs:
             ${{env.AWSL_SRC_ZIP}}
             ${{env.AWSL_LAYER_ZIP}}
 
-## temp comment this for testing purpose
-#      - name: dispatch "infrastructure-lambda-api"
-#        uses: peter-evans/repository-dispatch@v1
-#        with:
-#          token: ${{ env.GITHUB_PUSH_TOKEN }}
-#          repository: interscript/infrastructure-lambda-api
-#          event-type: ${{ github.repository }}
-#          client-payload: '{ "workflow": "terraform", "interscript_version": "${{env.INTERSCRIPT_VERSION}}" }'
+      - name: dispatch "infrastructure-lambda-api"
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ env.GITHUB_PUSH_TOKEN }}
+          repository: interscript/infrastructure-lambda-api
+          event-type: ${{ github.repository }}
+          client-payload: '{ "workflow": "terraform", "interscript_version": "${{env.INTERSCRIPT_VERSION}}" }'
