@@ -39,8 +39,6 @@ jobs:
           echo "RELEASE_NAME=$RELEASE_NAME"
           echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION"
 
-#          echo "INTERSCRIPT_VERSION=${GITHUB_REF#refs/*/v}" >> ${GITHUB_ENV}
-
       - name: build "interscript-api" source
         run: |
           gem install bundler

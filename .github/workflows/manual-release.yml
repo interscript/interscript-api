@@ -32,13 +32,8 @@ jobs:
           echo "API_VERSION=$API_VERSION" >> ${GITHUB_ENV}
 
           API_TAG_NAME="$API_VERSION"
-          [[ $API_TAG_NAME != "v*" ]] && API_TAG_NAME="v$API_TAG_NAME"
+          [[ $API_TAG_NAME != "v"* ]] && API_TAG_NAME="v$API_TAG_NAME"
           echo "API_TAG_NAME=$API_TAG_NAME" >> ${GITHUB_ENV}
-
-      - name: debug
-        run: |
-          echo "API_VERSION=$API_VERSION"
-          echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION"
 
       - name: make new release
         uses: actions/create-release@v1
