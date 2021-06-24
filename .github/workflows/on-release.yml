@@ -9,7 +9,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  release:
+  build-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,11 +33,6 @@ jobs:
           echo "AWS_LAMBDA=${GITHUB_WORKSPACE}/AWS_LAMBDA" >> ${GITHUB_ENV}
           echo "AWSL_SRC_ZIP=${AWS_LAMBDA}/aws-lambda-src.zip" >> ${GITHUB_ENV}
           echo "AWSL_LAYER_ZIP=${AWS_LAMBDA}/aws-lambda-layer.zip" >> ${GITHUB_ENV}
-
-      - name: debug
-        run: |
-          echo "RELEASE_NAME=$RELEASE_NAME"
-          echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION"
 
       - name: build "interscript-api" source
         run: |
