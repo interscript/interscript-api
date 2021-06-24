@@ -5,7 +5,7 @@ on:
     inputs:
       api_version:
         required: false
-        description: Interscript API release version, "empty" will use value of "gem_interscript_version"
+        description: Interscript API release version, default equals "gem_interscript_version"
       gem_interscript_version:
         required: true
         description: Interscript Gem version that published to "rubygems.org"
