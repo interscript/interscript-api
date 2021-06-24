@@ -31,6 +31,10 @@ jobs:
           API_VERSION="${API_VERSION:-$INTERSCRIPT_VERSION}"
           echo "API_VERSION=$API_VERSION" >> ${GITHUB_ENV}
 
+          API_TAG_NAME="$API_VERSION"
+          [[ $API_TAG_NAME != "v*" ]] && API_TAG_NAME="v$API_TAG_NAME"
+          echo "API_TAG_NAME=$API_TAG_NAME" >> ${GITHUB_ENV}
+
       - name: debug
         run: |
           echo "API_VERSION=$API_VERSION"
@@ -41,7 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{env.GITHUB_PUSH_TOKEN}}
         with:
-          tag_name: v${{env.API_VERSION}}
+          tag_name: ${{env.API_TAG_NAME}}
           release_name: Release API for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
           body: for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
           draft: false

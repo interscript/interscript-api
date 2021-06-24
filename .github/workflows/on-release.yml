@@ -57,6 +57,7 @@ jobs:
       - name: upload lambda layer to current release
         uses: softprops/action-gh-release@v1
         with:
+          release_name: ${{env.RELEASE_NAME}}
           files: |
             ${{env.AWSL_SRC_ZIP}}
             ${{env.AWSL_LAYER_ZIP}}
