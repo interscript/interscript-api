@@ -41,7 +41,7 @@ class QueryType < GraphQL::Schema::Object
     #                 interscript_version: InterscriptApi::INTERSCRIPT_VERSION
     #               })
     JSON.generate({
-                    limit: InterscriptApi::LIMITS[:input_max_size],
+                    # limit: InterscriptApi::LIMITS[:input_max_size],
                     interscript_version: InterscriptApi::VERSION
                   })
   end
@@ -51,13 +51,16 @@ class QueryType < GraphQL::Schema::Object
   # end
 
   def system_codes
-    spec = Gem::Specification.find_by_name("interscript")
-    gem_root = spec.gem_dir
-
-    maps_root = "#{gem_root}/maps"
-    Dir.entries(maps_root).
-      select { |file| file.end_with?(".yaml") }.
-      map { |file| File.basename(file, ".yaml") }
+    # Interscript.map_locations
+    # spec = Gem::Specification.find_by_name("interscript")
+    # gem_root = spec.gem_dir
+    #
+    # maps_root = "#{gem_root}/maps"
+    # maps_root = Interscript.map_aliases
+    # Dir.entries(maps_root).
+    #   select { |file| file.end_with?(".yaml") }.
+    #   map { |file| File.basename(file, ".yaml") }
+    ["not supported for now"]
   end
 end
 

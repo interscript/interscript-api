@@ -14,6 +14,16 @@ describe InterscriptApi do
       expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
     end
 
+    it "should print system_codes" do
+      ENV['INTERSCRIPT_STAGING'] = '1'
+      event = {
+        "body" => '{systemCodes}'
+      }
+      rs = handler(event: event)
+      # rs = JSON.parse(rs[:body])["data"]
+      puts rs
+      # expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
+    end
   end
 
   context "Cross origin input" do
