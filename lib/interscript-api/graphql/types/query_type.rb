@@ -2,6 +2,7 @@ require "graphql"
 require_relative "../../../limits"
 require_relative "../../../version"
 require "interscript"
+require "interscript/compiler/ruby"
 
 require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
 
@@ -32,7 +33,12 @@ class QueryType < GraphQL::Schema::Object
       raise StandardError.new("{input} string too long")
     end
 
-    Interscript.transliterate(system_code, input.dup)
+    Interscript.transliterate(
+      system_code,
+      input.dup,
+      @cache ||= {},
+      compiler: Interscript::Compiler::Ruby
+    )
   end
 
   def info
