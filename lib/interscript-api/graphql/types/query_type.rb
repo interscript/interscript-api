@@ -51,16 +51,7 @@ class QueryType < GraphQL::Schema::Object
   # end
 
   def system_codes
-    # Interscript.map_locations
-    # spec = Gem::Specification.find_by_name("interscript")
-    # gem_root = spec.gem_dir
-    #
-    # maps_root = "#{gem_root}/maps"
-    # maps_root = Interscript.map_aliases
-    # Dir.entries(maps_root).
-    #   select { |file| file.end_with?(".yaml") }.
-    #   map { |file| File.basename(file, ".yaml") }
-    ["not supported for now"]
+    Interscript.maps
   end
 end
 

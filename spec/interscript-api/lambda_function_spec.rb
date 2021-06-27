@@ -20,9 +20,8 @@ describe InterscriptApi do
         "body" => '{systemCodes}'
       }
       rs = handler(event: event)
-      # rs = JSON.parse(rs[:body])["data"]
-      puts rs
-      # expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
+      rs = JSON.parse(rs[:body])["data"].to_h
+      rs["systemCodes"].each { |i| expect(i).to be_a String }
     end
   end
 
