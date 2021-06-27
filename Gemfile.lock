@@ -8,7 +8,6 @@ GEM
       thor
     interscript-maps (2.0.5)
     rake (13.0.1)
-    rambling-trie (2.1.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -31,11 +30,10 @@ DEPENDENCIES
   graphql (~> 1.9)
   interscript (= 2.0.5)
   rake
-  rambling-trie (~> 2.1.1)
   rspec
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 3.0.1p64
 
 BUNDLED WITH
    2.1.4
