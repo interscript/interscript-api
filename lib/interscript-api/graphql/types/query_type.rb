@@ -6,7 +6,6 @@ require "interscript/compiler/ruby"
 
 require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
 
-
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
 
@@ -42,13 +41,9 @@ class QueryType < GraphQL::Schema::Object
   end
 
   def info
-    # JSON.generate({
-    #                 limit: InterscriptApi::LIMITS[:input_max_size],
-    #                 interscript_version: InterscriptApi::INTERSCRIPT_VERSION
-    #               })
     JSON.generate({
-                    # limit: InterscriptApi::LIMITS[:input_max_size],
-                    interscript_version: InterscriptApi::VERSION
+                    version: InterscriptApi::VERSION,
+                    interscript_version: Interscript::VERSION,
                   })
   end
 
