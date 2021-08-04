@@ -18,7 +18,7 @@ jobs:
           path: git
 
       - name: debug
-        run: echo ${{ github.event.release }}
+        run: echo ${{ toJSON(github.event.release) }}
 
 #      - name: setup env vars
 #        run: |
