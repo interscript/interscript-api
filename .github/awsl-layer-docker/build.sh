@@ -11,7 +11,7 @@ id=$(docker create interscript-lambda)
 docker cp "${id}":/lambda/opt/ ./libs
 docker rm -v "${id}"
 cd ./libs
-zip -r ../libs.zip "ruby"
+zip -r ../libs.zip .
 cd -
 
 #rm -Rf ./libs
