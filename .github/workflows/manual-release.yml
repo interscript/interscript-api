@@ -5,12 +5,6 @@ on:
     inputs:
       api_version:
         required: false
-<<<<<<< HEAD
-        description: Interscript API release version, default equals "gem_interscript_version"
-      gem_interscript_version:
-        required: true
-        description: Interscript Gem version that published to "rubygems.org"
-=======
         description: |
           API release version in semver format,
           "-preview.x" will be deployed to staging by default,
@@ -18,18 +12,13 @@ on:
       gem_version:
         required: true
         description: Gem version that published to "rubygems.org", ex. 1.8.1
->>>>>>> feat-auto-deploy-aws
 
 env:
   GITHUB_PUSH_TOKEN: ${{ secrets.INTERSCRIPT_CI_PAT }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   API_VERSION: ${{github.event.inputs.api_version}}
-<<<<<<< HEAD
-  INTERSCRIPT_VERSION: ${{github.event.inputs.gem_interscript_version}}
-=======
   GEM_VERSION: ${{github.event.inputs.gem_version}}
->>>>>>> feat-auto-deploy-aws
 
 jobs:
   make-release:
@@ -42,11 +31,7 @@ jobs:
 
       - name: setup env vars
         run: |
-<<<<<<< HEAD
-          API_VERSION="${API_VERSION:-$INTERSCRIPT_VERSION}"
-=======
           API_VERSION="${API_VERSION:-$GEM_VERSION}"
->>>>>>> feat-auto-deploy-aws
           echo "API_VERSION=$API_VERSION" >> ${GITHUB_ENV}
 
           API_TAG_NAME="$API_VERSION"
@@ -54,21 +39,11 @@ jobs:
           echo "API_TAG_NAME=$API_TAG_NAME" >> ${GITHUB_ENV}
 
       - name: make new release
-<<<<<<< HEAD
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{env.GITHUB_PUSH_TOKEN}}
-        with:
-          tag_name: ${{env.API_TAG_NAME}}
-          release_name: Release API for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
-          body: for Interscript Gem v${{env.INTERSCRIPT_VERSION}}
-=======
         uses: softprops/action-gh-release@v0.1.7
         with:
           token: ${{ env.GITHUB_PUSH_TOKEN }}
           tag_name: ${{env.API_TAG_NAME}}
           # https://rubygems.org/gems/interscript/versions/2.2.0
           body: "#release-by-ci for Interscript Gem v${{env.GEM_VERSION}}"
->>>>>>> feat-auto-deploy-aws
           draft: false
           prerelease: false
