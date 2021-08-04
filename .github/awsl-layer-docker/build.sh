@@ -1,6 +1,7 @@
 #!/bin/sh
 
 rm -Rf ./libs
+rm -Rf ./libs.zip
 cp ../../Gemfile Gemfile
 
 docker build  --no-cache \
