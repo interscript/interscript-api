@@ -5,13 +5,23 @@ describe InterscriptApi do
 
   context "With valid input" do
 
-    it "should return valid data" do
+    it "should return valid data when transliterate is called" do
       event = {
         "body" => '{transliterate(systemCode: "odni-rus-Cyrl-Latn-2015", input: "Михаил Тимофеевич Калашников")}'
       }
       rs = handler(event: event)
       rs = JSON.parse(rs[:body])["data"]["transliterate"]
       expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
+    end
+
+    it "should return valid data when detect is called" do
+      event = {
+        "body" => '{detect(input: "привет", output: "privet", mapPattern: "icao-ukr-*"){mapName,distance}}'
+      }
+      rs = handler(event: event)
+      p rs
+      rs = JSON.parse(rs[:body])["data"]["detect"]
+      expect(rs).to eq([{"mapName" => "icao-ukr-Cyrl-Latn-9303", "distance" => 1.0}])
     end
 
     it "should print system_codes" do
