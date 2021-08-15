@@ -12,23 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.event.client_payload.ref, 'refs/tags/v')
     steps:
-#      - run: echo "disabled for now"
-    - uses: actions/checkout@v1
-
-    - name: Setup env-vars
-      run: |
-        REF="${{ github.event.client_payload.ref }}"
-        INTERSCRIPT_VERSION=${REF#refs/*/v}
-        echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION" >> $GITHUB_ENV
-        echo "API_TAG_NAME=$INTERSCRIPT_VERSION" >> $GITHUB_ENV
-
-    - name: Create API Release
-      uses: actions/create-release@v1
-      with:
-        token: ${{ env.GITHUB_PUSH_TOKEN }}
-        tag_name: v${{env.API_TAG_NAME}}
-#        release_name: Release v${{env.INTERSCRIPT_VERSION}}
-#        body: Auto release API v${{env.INTERSCRIPT_VERSION}} by @interscript-ci
-        body: "#release-by-ci for Interscript Gem v${{env.INTERSCRIPT_VERSION}}"
-        draft: false
-        prerelease: false
+      - run: echo "disabled for now"
+#    - uses: actions/checkout@v1
+#
+#    - name: Setup env-vars
+#      run: |
+#        REF="${{ github.event.client_payload.ref }}"
+#        INTERSCRIPT_VERSION=${REF#refs/*/v}
+#        echo "INTERSCRIPT_VERSION=$INTERSCRIPT_VERSION" >> $GITHUB_ENV
+#        echo "API_TAG_NAME=$INTERSCRIPT_VERSION" >> $GITHUB_ENV
+#
+#    - name: Create API Release
+#      uses: actions/create-release@v1
+#      with:
+#        token: ${{ env.GITHUB_PUSH_TOKEN }}
+#        tag_name: v${{env.API_TAG_NAME}}
+##        release_name: Release v${{env.INTERSCRIPT_VERSION}}
+##        body: Auto release API v${{env.INTERSCRIPT_VERSION}} by @interscript-ci
+#        body: "#release-by-ci for Interscript Gem v${{env.INTERSCRIPT_VERSION}}"
+#        draft: false
+#        prerelease: false
