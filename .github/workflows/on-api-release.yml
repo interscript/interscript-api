@@ -66,7 +66,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ env.GITHUB_PUSH_TOKEN }}
-          repository: relaton/infrastructure-lambda-api
+          repository: interscript/infrastructure-lambda-api
           event-type: ${{ github.repository }}
           client-payload: >-
             {
