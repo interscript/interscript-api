@@ -45,6 +45,7 @@ jobs:
       - name: build "-api" source
         working-directory: git
         run: |
+          cp Gemfile* lib/
           zip -r ${AWSL_SRC_ZIP} lib
 
       - name: build "-layer"
