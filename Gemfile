@@ -14,3 +14,5 @@ group :development do
   gem "rake"
   gem "rspec"
 end
+
+gem 'rababa', github: 'interscript/rababa', ref: '70051da'
