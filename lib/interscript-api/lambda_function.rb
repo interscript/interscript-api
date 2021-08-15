@@ -4,7 +4,14 @@ require "bundler/setup"
 
 def handler(event:, context: {})
   puts 123
-  puts event
+  puts ENV["RABADA_DATA"]
+  puts File.directory?(ENV["RABADA_DATA"])
+  File.open("#{ENV["RABADA_DATA"]}/log.txt", "w") { |f| f.write "#{Time.now} - User logged in\n" }
+  file = File.open("#{ENV["RABADA_DATA"]}/log.txt")
+  file_data = file.read
+  puts file_data
+  file.close
+  puts ENV
 
   cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
