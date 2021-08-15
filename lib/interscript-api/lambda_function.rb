@@ -1,5 +1,6 @@
 require "json"
 require_relative "graphql/schema"
+require "bundler/setup"
 
 def handler(event:, context: {})
   puts 123
