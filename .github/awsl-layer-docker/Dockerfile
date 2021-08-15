@@ -26,5 +26,4 @@ FROM lambci/yumda:2 as yumda
 #COPY --from=builder /lambda/ /lambda/
 #COPY --from=builder /ruby/2.7.0 /lambda/opt/ruby/gems/2.7.0
 COPY --from=builder /vendor/ruby /lambda/opt/ruby/gems/
-COPY --from=builder /vendor/ruby/2.7.0/bundler/gems /lambda/opt/ruby/gems/2.7.0/gems
 
