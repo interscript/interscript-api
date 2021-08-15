@@ -6,7 +6,7 @@ RUN echo "using INTERSCRIPT_GEM_VERSION=$INTERSCRIPT_GEM_VERSION"
 ADD Gemfile .
 RUN bundle config set path "/vendor"
 RUN bundle install --without=development --jobs 4 --retry 3
-
+#RUN ls -all /venfor/ruby/2.7.0/bundler/gems
 # RUN echo "install python libs"
 
 #RUN PYTHONUSERBASE=/lambda/lib/python3.7 pip3 install --user install \
@@ -26,4 +26,5 @@ FROM lambci/yumda:2 as yumda
 #COPY --from=builder /lambda/ /lambda/
 #COPY --from=builder /ruby/2.7.0 /lambda/opt/ruby/gems/2.7.0
 COPY --from=builder /vendor/ruby /lambda/opt/ruby/gems/
+COPY --from=builder /vendor/ruby/2.7.0/bundler/gems /lambda/opt/ruby/gems/2.7.0/gems
 
