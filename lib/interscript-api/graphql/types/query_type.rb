@@ -6,6 +6,11 @@ require "interscript/compiler/ruby"
 
 require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
 
+class DetectionResultType < GraphQL::Schema::Object
+  field :map_name, String, null: false
+  field :distance, Float, null: false
+end
+
 class QueryType < GraphQL::Schema::Object
   description "Root Query for this API"
 
@@ -38,6 +43,27 @@ class QueryType < GraphQL::Schema::Object
       @cache ||= {},
       compiler: Interscript::Compiler::Ruby
     )
+  end
+
+  field :detect, [DetectionResultType], null: true do
+    description "Detect which transliteration system was used for #input to generate #output"
+    argument :input, String, required: true
+    argument :output, String, required: true
+
+    argument :map_pattern, String, required: false, default_value: '*'
+  end
+
+  def detect(input:, output:, map_pattern: "*")
+    Interscript.detect(
+      input,
+      output,
+      compiler: Interscript::Compiler::Ruby,
+      multiple: true,
+      cache: @cache ||= {},
+      map_pattern: map_pattern
+    ).map do |map_name, distance|
+      { map_name: map_name, distance: distance }
+    end
   end
 
   def info
