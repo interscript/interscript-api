@@ -2,11 +2,14 @@ require "json"
 require_relative "graphql/schema"
 
 def handler(event:, context: {})
+  puts 123
+  puts event
 
   cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
 
   if /#{ENV["CORS_ORIGIN_REGEX"]}/ =~ input_origin
+    puts 'match origin'
     cors_origin = input_origin
   end
 
