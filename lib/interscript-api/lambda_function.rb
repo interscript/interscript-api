@@ -3,23 +3,6 @@ require_relative "graphql/schema"
 require "bundler/setup"
 
 def handler(event:, context: {})
-  puts 123
-  puts ENV["RABADA_DATA"]
-  puts File.directory?(ENV["RABADA_DATA"])
-  File.open("#{ENV["RABADA_DATA"]}/log.txt", "w") { |f| f.write "#{Time.now} - User logged in\n" }
-  file = File.open("#{ENV["RABADA_DATA"]}/log.txt")
-  file_data = file.read
-  puts file_data
-  file.close
-  puts ENV
-  require 'fileutils'
-  begin
-    FileUtils.mkdir_p(ENV["RABABA_DATA"])
-    puts "Access Ok"
-  rescue => e
-    puts e.message
-  end
-
   cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
 
