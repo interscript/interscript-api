@@ -12,6 +12,13 @@ def handler(event:, context: {})
   puts file_data
   file.close
   puts ENV
+  require 'fileutils'
+  begin
+    FileUtils.mkdir_p(ENV["RABABA_DATA"])
+    puts "Access Ok"
+  rescue => e
+    puts e.message
+  end
 
   cors_origin = ENV["DEFAULT_ORIGIN"]
   input_origin = event.fetch('headers', {}).fetch('origin', "")
