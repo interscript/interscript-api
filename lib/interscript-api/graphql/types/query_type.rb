@@ -37,12 +37,15 @@ class QueryType < GraphQL::Schema::Object
       raise StandardError.new("{input} string too long")
     end
 
-    Interscript.transliterate(
+    puts "123 2"
+    rs = Interscript.transliterate(
       system_code,
       input.dup,
       @cache ||= {},
       compiler: Interscript::Compiler::Ruby
     )
+    puts "123 3"
+    rs
   end
 
   field :detect, [DetectionResultType], null: true do

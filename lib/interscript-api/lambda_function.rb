@@ -46,6 +46,7 @@ def handler(event:, context: {})
     #ignore
   end
 
+  puts "123 1"
   {
     statusCode: status_code,
     headers: headers,
