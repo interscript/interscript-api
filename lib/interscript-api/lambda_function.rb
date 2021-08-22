@@ -39,6 +39,7 @@ def handler(event:, context: {})
                 rescue StandardError => e
                   puts "123 4"
                   result = e.message
+                  puts result
                   400
                 end
 
