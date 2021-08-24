@@ -19,17 +19,18 @@ def handler(event:, context: {})
 
   body = event['body']
   if "OPTIONS".casecmp?(event['httpMethod']) || body.nil? || body.empty?
-    puts "123 7"
     return {
       statusCode: 200,
       headers: headers,
     }
   end
 
+  puts "123 hardcode rababa for testing"
+  ENV['RABABA_DATA']='/tmp'
+
   query = begin
             JSON.parse(body)["query"]
           rescue JSON::ParserError
-            puts "123 5"
             body
           end
 
@@ -37,7 +38,6 @@ def handler(event:, context: {})
                   result = InterscriptApi::Schema.execute(query).to_json
                   200
                 rescue StandardError => e
-                  puts "123 4"
                   result = e.message
                   400
                 end
@@ -46,7 +46,6 @@ def handler(event:, context: {})
     result_json = JSON.parse result
     status_code = 400 if result_json.key?("errors")
   rescue JSON::ParserError
-    puts "123 6"
     #ignore
   end
 

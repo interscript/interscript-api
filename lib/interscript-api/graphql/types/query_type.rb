@@ -37,14 +37,12 @@ class QueryType < GraphQL::Schema::Object
       raise StandardError.new("{input} string too long")
     end
 
-    puts "123 2"
     rs = Interscript.transliterate(
       system_code,
       input.dup,
       @cache ||= {},
       compiler: Interscript::Compiler::Ruby
     )
-    puts "123 3"
     rs
   end
 
@@ -57,7 +55,9 @@ class QueryType < GraphQL::Schema::Object
   end
 
   def detect(input:, output:, map_pattern: "*")
-    Interscript.detect(
+    puts "123 before call Interscript.detect"
+
+    rs = Interscript.detect(
       input,
       output,
       compiler: Interscript::Compiler::Ruby,
@@ -67,6 +67,10 @@ class QueryType < GraphQL::Schema::Object
     ).map do |map_name, distance|
       { map_name: map_name, distance: distance }
     end
+
+    puts "123 after call Interscript.detect"
+
+    rs
   end
 
   def info
