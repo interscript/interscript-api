@@ -25,9 +25,6 @@ def handler(event:, context: {})
     }
   end
 
-  puts "123 hardcode rababa for testing"
-  ENV['RABABA_DATA']='/tmp'
-
   query = begin
             JSON.parse(body)["query"]
           rescue JSON::ParserError
@@ -53,7 +50,6 @@ def handler(event:, context: {})
     #ignore
   end
 
-  puts "123 1"
   {
     statusCode: status_code,
     headers: headers,

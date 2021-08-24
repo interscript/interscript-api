@@ -44,24 +44,36 @@ jobs:
           password: "${{env.GITHUB_PUSH_TOKEN}}"
           buildargs: INTERSCRIPT_GEM_VERSION
 
-      - name: setup-aws-credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: dispatch "infrastructure-lambda-api"
+        uses: peter-evans/repository-dispatch@v1
         with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          token: ${{ env.GITHUB_PUSH_TOKEN }}
+          repository: interscript/infrastructure-lambda-api
+          event-type: ${{ github.repository }}
+          client-payload: >-
+            {
+              "workflow": "publish-ecr.yml",
+              "api_tag_name": "${{env.RELEASE_TAG_NAME}}"
+            }
 
-      - name: ecr-login
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: push to ecr
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        working-directory: .github/lambda
-        run: |
-          docker build -t $ECR_REGISTRY/interscript-api:${{env.RELEASE_TAG_NAME}} .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.RELEASE_TAG_NAME}}
+#      - name: setup-aws-credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: us-east-1
+#
+#      - name: ecr-login
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v1
+#
+#      - name: push to ecr
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#        working-directory: .github/lambda
+#        run: |
+#          docker build -t $ECR_REGISTRY/interscript-api:${{env.RELEASE_TAG_NAME}} .
+#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.RELEASE_TAG_NAME}}
 
 
 
