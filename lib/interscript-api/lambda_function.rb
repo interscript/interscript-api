@@ -39,7 +39,11 @@ def handler(event:, context: {})
                   200
                 rescue StandardError => e
                   result = e.message
+                  puts result
                   400
+                rescue => e
+                  puts e
+                  puts "Catch Error"
                 end
 
   begin

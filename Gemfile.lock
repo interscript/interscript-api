@@ -4,11 +4,11 @@ GEM
     diff-lcs (1.4.4)
     ffi (1.15.3)
     graphql (1.11.3)
-    interscript (2.3.1)
+    interscript (2.3.2)
       interscript-maps (~> 2.3.0a)
       text
       thor
-    interscript-maps (2.3.1)
+    interscript-maps (2.3.2)
     onnxruntime (0.6.3)
       ffi
     optparse (0.1.1)
@@ -41,7 +41,7 @@ PLATFORMS
 
 DEPENDENCIES
   graphql (~> 1.9)
-  interscript (= 2.3.1)
+  interscript (= 2.3.2)
   rababa (~> 0.1.1)
   rake
   rspec
