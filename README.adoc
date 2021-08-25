@@ -88,7 +88,14 @@ curl -XPOST ${API_URL} \
 
 == Release new version
 
-- Manual release: use GHA "manual-release.yml" to release new version on GitHub "interscript-api" and trigger deployment on "-infra" repository,
-  input should be both `api_version` and `gem_interscript_version`
+- Manual release: use GHA "manual-release.yml" to release new version on GitHub "interscript-api"
+  and trigger deployment on "-infra" repository, input should be both `api_version` and `gem_version`
 
-- Auto release: Not available for now
+- Be notice that `api_version` with identifier "-preview" is set to deploy to "staging-aws",
+  others is set to "prod-aws"
+
+- Input Api Version should be in "X.Y.Z{-preview.w}";
+  i.e. "2.1.1-preview.1" => deploy to staging
+  "2.1.1" => deploy to production
+
+- Auto release on "interscript gem publish-event": Not available for now
