@@ -14,6 +14,15 @@ describe InterscriptApi do
       expect(rs).to eql("Mikhail Timofeyevich Kalashnikov")
     end
 
+    it "should return valid data when transliterate is called with Rababa" do
+      event = {
+        "body" => '{transliterate(systemCode: "var-ara-Arab-Arab-rababa|odni-ara-Arab-Latn-2015", input: "مِصر")}'
+      }
+      rs = handler(event: event)
+      rs = JSON.parse(rs[:body])["data"]["transliterate"]
+      expect(rs).to eql("Miṣra")
+    end
+
     it "should return valid data when detect is called" do
       event = {
         "body" => '{detect(input: "привет", output: "privet", mapPattern: "icao-ukr-*"){mapName,distance}}'
