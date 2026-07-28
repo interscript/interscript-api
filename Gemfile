@@ -1,18 +1,18 @@
 source "https://rubygems.org"
 
-ruby RUBY_VERSION
+ruby ">= 3.3.0"
 
-gem "graphql", "~>1.9"
+gem "graphql", "~> 1.13"
 
-unless ENV['INTERSCRIPT_GEM_VERSION'].empty? then
-  gem "interscript", ENV['INTERSCRIPT_GEM_VERSION']
+if ENV["INTERSCRIPT_GEM_VERSION"] && !ENV["INTERSCRIPT_GEM_VERSION"].empty?
+  gem "interscript", ENV["INTERSCRIPT_GEM_VERSION"]
 else
   gem "interscript", "0.1.9"
 end
 
-group :development do
-  gem "rake"
-  gem "rspec"
-end
+gem "rababa", "~> 0.1.1"
 
-gem 'rababa', '~> 0.1.1'
+group :development, :test do
+  gem "rake"
+  gem "rspec", "~> 3.13"
+end

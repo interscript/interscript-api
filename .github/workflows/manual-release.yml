@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone it
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -39,7 +39,7 @@ jobs:
           echo "API_TAG_NAME=$API_TAG_NAME" >> ${GITHUB_ENV}
 
       - name: make new release
-        uses: softprops/action-gh-release@v0.1.7
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ env.GITHUB_PUSH_TOKEN }}
           tag_name: ${{env.API_TAG_NAME}}

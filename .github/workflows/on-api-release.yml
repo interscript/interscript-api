@@ -14,9 +14,9 @@ jobs:
   build-release:
     runs-on: ubuntu-latest
     # id=68949242 => interscript-ci user
-    if: ${{ github.event.release.author.id == 68949242 }}  #contains(github.event.release.body, '#releaseed-by-ci')
+    if: ${{ github.event.release.author.id == 68949242 }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: setup env vars
         run: |
           RELEASE_BODY="${{github.event.release.body}}"
@@ -45,7 +45,7 @@ jobs:
           buildargs: INTERSCRIPT_GEM_VERSION
 
       - name: dispatch "infrastructure-lambda-api"
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ env.GITHUB_PUSH_TOKEN }}
           repository: interscript/infrastructure-lambda-api
@@ -55,88 +55,3 @@ jobs:
               "workflow": "publish-ecr.yml",
               "api_tag_name": "${{env.RELEASE_TAG_NAME}}"
             }
-
-#      - name: setup-aws-credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: us-east-1
-#
-#      - name: ecr-login
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v1
-#
-#      - name: push to ecr
-#        env:
-#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#        working-directory: .github/lambda
-#        run: |
-#          docker build -t $ECR_REGISTRY/interscript-api:${{env.RELEASE_TAG_NAME}} .
-#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.RELEASE_TAG_NAME}}
-
-
-
-
-#      - name: push to github package
-#        uses: elgohr/Publish-Docker-Github-Action@master
-#        with:
-#          workdir: .github/lambda
-#          dockerfile: Dockerfile
-#          tags: "latest,${{env.RELEASE_TAG_NAME}}"
-#          registry: ""
-#          name: "awslambda-interscript-api"
-#          username: "${{env.AWS_ACCESS_KEY_ID}}"
-#          password: "${{env.}}"
-#          buildargs: INTERSCRIPT_GEM_VERSION
-
-#      - name: login github package
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#      - name: build and push
-#        id: docker_build
-#        uses: docker/build-push-action@v2
-#        with:
-#          push: true
-#          tags: user/app:latest
-
-#      - name: setup ruby+install
-#        uses: ruby/setup-ruby@v1.75.0
-#        with:
-#          bundler-cache: false
-#          ruby-version: 2.7
-
-#      - name: build "-api" source
-#        working-directory: git
-#        run: |
-#          cp Gemfile* lib/
-#          zip -r ${AWSL_SRC_ZIP} lib
-
-#      - name: build "-layer"
-#        working-directory: git/.github/awsl-layer-docker
-#        run: |
-#          ls -all
-#          bash build.sh
-#          cp libs.zip $AWSL_LAYER_ZIP
-
-#      - name: upload lambda layer to current release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          tag_name: ${{env.RELEASE_TAG_NAME}}
-#          files: |
-#            ${{env.AWSL_SRC_ZIP}}
-#            ${{env.AWSL_LAYER_ZIP}}
-
-#      - name: dispatch "infrastructure-lambda-api"
-#        uses: peter-evans/repository-dispatch@v1
-#        with:
-#          token: ${{ env.GITHUB_PUSH_TOKEN }}
-#          repository: interscript/infrastructure-lambda-api
-#          event-type: ${{ github.repository }}
-#          client-payload: >-
-#            {
-#              "workflow": "on-api-release.yml",
-#              "api_tag_name": "${{env.RELEASE_TAG_NAME}}"
-#            }
