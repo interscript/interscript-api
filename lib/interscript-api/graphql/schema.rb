@@ -1,7 +1,11 @@
-require_relative "types/query_type"
+# frozen_string_literal: true
+
+require_relative "types/query"
 
 module InterscriptApi
-  class Schema < GraphQL::Schema
-    query QueryType
+  module GraphQL
+    class Schema < ::GraphQL::Schema
+      query Types::Query
+    end
   end
 end
