@@ -1,3 +1,4 @@
+image:https://github.com/interscript/interscript-api/actions/workflows/test.yml/badge.svg["CI status", link="https://github.com/interscript/interscript-api/actions/workflows/test.yml"]
 = Interscript API package
 
 This is the API for Interscript.
