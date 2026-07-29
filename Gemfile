@@ -15,4 +15,5 @@ gem "rababa", "~> 0.1.1"
 group :development, :test do
   gem "rake"
   gem "rspec", "~> 3.13"
+  gem "standard", require: false
 end
