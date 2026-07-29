@@ -10,6 +10,10 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-release:
     runs-on: ubuntu-latest
@@ -17,34 +21,40 @@ jobs:
     if: ${{ github.event.release.author.id == 68949242 }}
     steps:
       - uses: actions/checkout@v7
-      - name: setup env vars
+
+      - name: Extract gem version from release body
         run: |
           RELEASE_BODY="${{github.event.release.body}}"
-          echo "RELEASE_BODY=$RELEASE_BODY" >> ${GITHUB_ENV}
           RELEASE_TAG_NAME="${{github.event.release.tag_name}}"
-          echo "RELEASE_TAG_NAME=$RELEASE_TAG_NAME" >> ${GITHUB_ENV}
           GEM_VERSION=$(echo "$RELEASE_BODY" | grep -Po '(?<=v)[^;]+')
+          echo "RELEASE_TAG_NAME=$RELEASE_TAG_NAME" >> ${GITHUB_ENV}
           echo "GEM_VERSION=$GEM_VERSION" >> ${GITHUB_ENV}
           echo "INTERSCRIPT_GEM_VERSION=$GEM_VERSION" >> ${GITHUB_ENV}
 
-      - name: prepare docker context
+      - name: Prepare docker context
         working-directory: .github/lambda
-        run: |
-          bash build.sh
+        run: bash build.sh
 
-      - name: push to github package
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
         with:
-          workdir: .github/lambda
-          dockerfile: Dockerfile
-          tags: "latest,${{env.RELEASE_TAG_NAME}}"
-          registry: "docker.pkg.github.com"
-          name: "${{github.repository}}/awslambda-interscript-api"
-          username: "${{github.actor}}"
-          password: "${{env.GITHUB_PUSH_TOKEN}}"
-          buildargs: INTERSCRIPT_GEM_VERSION
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ env.GITHUB_PUSH_TOKEN }}
 
-      - name: dispatch "infrastructure-lambda-api"
+      - name: Build and push Lambda image
+        uses: docker/build-push-action@v7
+        with:
+          context: .github/lambda
+          file: .github/lambda/Dockerfile
+          push: true
+          build-args: |
+            INTERSCRIPT_GEM_VERSION=${{ env.GEM_VERSION }}
+          tags: |
+            ghcr.io/${{ github.repository }}/awslambda-interscript-api:latest
+            ghcr.io/${{ github.repository }}/awslambda-interscript-api:${{ env.RELEASE_TAG_NAME }}
+
+      - name: Dispatch "infrastructure-lambda-api"
         uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ env.GITHUB_PUSH_TOKEN }}

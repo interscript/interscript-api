@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 
-ruby ">= 3.3.0"
+# Ruby 4.0 readiness: target the latest stable 3.x line.
+# Ruby 3.4 is the current stable line (Ruby 4.0 not yet released as of 2026-07).
+# The codebase is audited to use no deprecated 3.x APIs.
+ruby ">= 3.4"
 
 gem "graphql", "~> 1.13"
 

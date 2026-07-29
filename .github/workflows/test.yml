@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["3.3", "3.4"]
+        ruby: ["3.4"]  # Ruby 4.0 readiness: target latest stable 3.x line
     env:
       INTERSCRIPT_GEM_VERSION: "0.1.9"
     steps:
