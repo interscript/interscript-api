@@ -4,7 +4,7 @@ require_relative "../../../version"
 require "interscript"
 require "interscript/compiler/ruby"
 
-require 'pathname' unless ENV["AWS_EXECUTION_ENV"].nil?
+require "pathname" unless ENV["AWS_EXECUTION_ENV"].nil?
 
 class DetectionResultType < GraphQL::Schema::Object
   field :map_name, String, null: false
@@ -37,13 +37,12 @@ class QueryType < GraphQL::Schema::Object
       raise StandardError.new("{input} string too long")
     end
 
-    rs = Interscript.transliterate(
+    Interscript.transliterate(
       system_code,
       input.dup,
       @cache ||= {},
       compiler: Interscript::Compiler::Ruby
     )
-    rs
   end
 
   field :detect, [DetectionResultType], null: true do
@@ -51,11 +50,11 @@ class QueryType < GraphQL::Schema::Object
     argument :input, String, required: true
     argument :output, String, required: true
 
-    argument :map_pattern, String, required: false, default_value: '*'
+    argument :map_pattern, String, required: false, default_value: "*"
   end
 
   def detect(input:, output:, map_pattern: "*")
-    rs = Interscript.detect(
+    Interscript.detect(
       input,
       output,
       compiler: Interscript::Compiler::Ruby,
@@ -63,17 +62,15 @@ class QueryType < GraphQL::Schema::Object
       cache: @cache ||= {},
       map_pattern: map_pattern
     ).map do |map_name, distance|
-      { map_name: map_name, distance: distance }
+      {map_name: map_name, distance: distance}
     end
-
-    rs
   end
 
   def info
     JSON.generate({
-                    version: InterscriptApi::VERSION,
-                    interscript_version: Interscript::VERSION,
-                  })
+      version: InterscriptApi::VERSION,
+      interscript_version: Interscript::VERSION
+    })
   end
 
   # def limits
@@ -84,5 +81,3 @@ class QueryType < GraphQL::Schema::Object
     Interscript.maps
   end
 end
-
-

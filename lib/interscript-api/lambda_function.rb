@@ -4,50 +4,50 @@ require "bundler/setup"
 
 def handler(event:, context: {})
   cors_origin = ENV["DEFAULT_ORIGIN"]
-  input_origin = event.fetch('headers', {}).fetch('origin', "")
+  input_origin = event.fetch("headers", {}).fetch("origin", "")
 
-  if /#{ENV["CORS_ORIGIN_REGEX"]}/ =~ input_origin
-    puts 'match origin'
+  if /#{ENV["CORS_ORIGIN_REGEX"]}/.match?(input_origin)
+    puts "match origin"
     cors_origin = input_origin
   end
 
   headers = {
     "Access-Control-Allow-Origin" => cors_origin,
-    "Access-Control-Allow-Headers"=> 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-    "Access-Control-Allow-Methods"=> "POST, OPTIONS"
+    "Access-Control-Allow-Headers" => "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+    "Access-Control-Allow-Methods" => "POST, OPTIONS"
   }
 
-  body = event['body']
-  if "OPTIONS".casecmp?(event['httpMethod']) || body.nil? || body.empty?
+  body = event["body"]
+  if "OPTIONS".casecmp?(event["httpMethod"]) || body.nil? || body.empty?
     return {
       statusCode: 200,
-      headers: headers,
+      headers: headers
     }
   end
 
   query = begin
-            JSON.parse(body)["query"]
-          rescue JSON::ParserError
-            body
-          end
+    JSON.parse(body)["query"]
+  rescue JSON::ParserError
+    body
+  end
 
   status_code = begin
-                  result = InterscriptApi::Schema.execute(query).to_json
-                  200
-                rescue StandardError => e
-                  result = e.message
-                  puts result
-                  400
-                rescue => e
-                  puts e
-                  puts "Catch Error"
-                end
+    result = InterscriptApi::Schema.execute(query).to_json
+    200
+  rescue => e
+    result = e.message
+    puts result
+    400
+  rescue => e
+    puts e
+    puts "Catch Error"
+  end
 
   begin
     result_json = JSON.parse result
     status_code = 400 if result_json.key?("errors")
   rescue JSON::ParserError
-    #ignore
+    # ignore
   end
 
   {
