@@ -5,7 +5,7 @@ source "https://rubygems.org"
 # The codebase is audited to use no deprecated 3.x APIs.
 ruby ">= 3.4"
 
-gem "graphql", "~> 1.13"
+gem "graphql", "~> 2.6"
 
 if ENV["INTERSCRIPT_GEM_VERSION"] && !ENV["INTERSCRIPT_GEM_VERSION"].empty?
   gem "interscript", ENV["INTERSCRIPT_GEM_VERSION"]
