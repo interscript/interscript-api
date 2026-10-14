@@ -10,7 +10,7 @@ gem "graphql", "~> 1.13"
 if ENV["INTERSCRIPT_GEM_VERSION"] && !ENV["INTERSCRIPT_GEM_VERSION"].empty?
   gem "interscript", ENV["INTERSCRIPT_GEM_VERSION"]
 else
-  gem "interscript", "0.1.9"
+  gem "interscript", "3.0.1"
 end
 
 gem "rababa", "~> 0.1.1"
